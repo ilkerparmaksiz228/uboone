@@ -1,0 +1,61 @@
+# This @product_deps@ file defines dependencies for this package. 
+
+# The *parent* line must the first non-commented line and defines this product and version
+# The version must be of the form vxx_yy_zz (e.g. v01_02_03)
+parent uboonecode v06_39_00
+defaultqual e14
+
+# These optional lines define where headers, libraries, and executables go and should
+# be used only if your product does not conform to the defaults.
+# Format: directory_type directory_path directory_name
+#   where directory_type is one of incdir, libdir, or bindir
+#   where directory_path is one of product_dir, fq_dir and - 
+# Defaults:
+# incdir  product_dir  include
+# fcldir  product_dir  fcl
+# libdir  fq_dir       lib
+# bindir  fq_dir       bin
+#
+fcldir  product_dir job
+gdmldir product_dir gdml
+fwdir   product_dir scripts
+
+# table fragment to set FW_SEARCH_PATH needed 
+# to find gdml files:
+table_fragment_begin
+    pathPrepend(FW_SEARCH_PATH, ${UBOONECODE_DIR}/scripts)
+    pathPrepend(FW_SEARCH_PATH, ${UBOONECODE_DIR}/gdml)
+    pathPrepend(FHICL_FILE_PATH, .:./job)
+table_fragment_end
+
+# With "product  version" table below, we now define depdendencies
+
+# Add the dependent product and version
+
+product          version
+swtrigger       v02_02_05a
+genie_xsec      v2_12_0
+larsoft         v06_39_00
+ubutil          v06_39_00
+uboonedata   	v01_18_00
+uboonedaq_datatypes v6_19_01_e14
+
+cetbuildtools	v5_06_07	-	only_for_build
+end_product_list
+
+
+# We now define allowed qualifiers and the corresponding qualifiers for the depdencies.
+# Make a table by adding columns before "notes". 
+# e14  - with gcc 6.3.0 and -std=c++1y
+qualifier	swtrigger	genie_xsec	larsoft		ubutil		uboonedata	uboonedaq_datatypes	notes
+e14:debug	e14:debug	DefaultPlusMECWithNC	e14:debug	e14:debug	-nq-		e14:debug
+e14:opt		e14:opt		DefaultPlusMECWithNC	e14:opt		e14:opt		-nq-        	e14:opt
+e14:prof	e14:prof	DefaultPlusMECWithNC	e14:prof	e14:prof	-nq-        	e14:prof
+e14:prof:fg	e14:prof	LocalFGNievesQEAndMEC	e14:prof	e14:prof	-nq-        	e14:prof
+end_qualifier_list
+
+# Preserve tabs and formatting in emacs and vi / vim:
+
+### Local Variables:
+### tab-width: 8
+### End:

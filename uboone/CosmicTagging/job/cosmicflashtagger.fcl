@@ -1,0 +1,33 @@
+#include "flashmatchalg.fcl"
+
+BEGIN_PROLOG
+#
+# Module configuration
+#
+CosmicFlashTagger: {
+module_type:           "CosmicFlashTagger"
+PFParticleProducer:    "pandoraCosmicKHit"
+TrackProducer:         "pandoraCosmicKHit"  # not used
+BeamOpFlashProducer:   "simpleFlashBeam"
+CosmicOpFlashProducer: "simpleFlashCosmic"  # not used
+TriggerProducer:       "daq"
+FlashVetoTimeStart:    3.  # This is the time window used
+FlashVetoTimeEnd:      6.  # to select beam flashes
+MinimumNumberOfTrajectoryPoints: 1
+BeamWindowStartBNB:    3.
+BeamWindowEndBNB:      6.
+MinimumTrackLength:    20. # not used
+DebugMode:             false
+FlashMatchConfig:      @local::flashmatch_config
+
+IncompCheckConfig: {
+  SigmaThreshold:   3
+  NBinsRequirement: 1
+  UsePEConstraint:  true
+  UseFlashPosition: true
+ }
+}
+
+microboone_cosmicpfpflashtagger: @local::CosmicFlashTagger
+
+END_PROLOG
